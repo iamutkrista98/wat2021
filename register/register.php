@@ -20,6 +20,7 @@
         $uemail = $_POST['uemail'];
         $password = $_POST['upassword'];
         $age = $_POST['age'];
+        $passpattern="/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])\S{6,}$/";
         if(empty($username))
         {
             array_push($errors,"Username is required!");
@@ -27,6 +28,9 @@
         if(empty($uemail))
         {
             array_push($errors,"Email Address is required!");
+        }
+        if (!filter_var($uemail, FILTER_VALIDATE_EMAIL)) {
+            array_push($errors,"Invalid email format");
         }    
         if(empty($password))
         {
@@ -44,8 +48,12 @@
         {
             array_push($errors,"Please accept the licence terms and conditions!");
         }
+        if(!preg_match($passpattern,$password))
+        {
+            array_push($errors,"Please make sure password has at least 1 digit,1 uppercase,1 lowercase character!");
+        }
         if (!empty($errors) && is_array($errors)) 
-{ 
+        { 
             foreach($errors as $message) {
                 echo $message . "<br/>";
             }
@@ -61,6 +69,12 @@
         }
 
     }
+    else{
+        header("Location:register.php?msg=Unable to register");
+    }
+
+
+    mysqli_close($connection);
 
 
 
