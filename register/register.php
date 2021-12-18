@@ -8,6 +8,12 @@
 </head>
 <body> 
     <?php
+     if(isset($_GET['msg']))
+     {
+         echo '<h2>'.$_GET['msg'].'</h2';
+     }
+    ?>
+    <?php
     //initialization 
     $username ='';
     $uemail ='';
@@ -16,6 +22,7 @@
     $errors=array();
     if(isset($_POST['register']))
     {
+        echo "<h2>Errors</h2>";
         $username = $_POST['username'];
         $uemail = $_POST['uemail'];
         $password = $_POST['upassword'];
@@ -69,12 +76,7 @@
         }
 
     }
-    else{
-        header("Location:register.php?msg=Unable to register");
-    }
 
-
-    mysqli_close($connection);
 
 
 
